@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IDShield AI</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="loginScreen" class="login-screen">
+  <div class="login-brand-panel">
+    <div class="login-brand">
+      <div class="login-shield">⌾</div>
+      <div class="login-brand-name">IDSHIELD <span>AI</span></div>
+      <div class="login-brand-sub">Intelligent Identity Verification</div>
+    </div>
+    <div class="login-divider"></div>
+    <h2>Secure. Verify. Protect.</h2>
+    <p>AI-Powered Identity Verification<br>for a Safer Tomorrow.</p>
+    <div class="login-trust">◈ &nbsp; Trusted &nbsp;•&nbsp; Secure &nbsp;•&nbsp; Reliable</div>
+  </div>
+
+  <div class="login-form-panel">
+    <div class="login-form-wrap">
+      <div class="login-mini-shield">♢</div>
+      <h1>Welcome Back</h1>
+      <p class="login-subtitle">Sign in to continue to IDShield AI</p>
+
+      <form id="loginForm" autocomplete="on">
+        <label for="loginEmail">Username or Email</label>
+        <div class="login-input">
+          <span>✉</span>
+          <input id="loginEmail" name="username" type="text" placeholder="Enter your username or email" autocomplete="username" required>
+        </div>
+
+        <label for="loginPassword">Password</label>
+        <div class="login-input">
+          <span>▣</span>
+          <input id="loginPassword" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+          <button type="button" id="togglePassword" class="eye-btn" aria-label="Show password">◉</button>
+        </div>
+
+        <div class="login-options">
+          <label class="remember"><input id="rememberMe" type="checkbox"> <span>Remember me</span></label>
+          <button type="button" id="forgotPassword" class="link-btn">Forgot Password?</button>
+        </div>
+
+        <button type="submit" class="login-submit">♢ &nbsp; Sign In</button>
+      </form>
+
+      <div class="login-or"><span></span><b>OR</b><span></span></div>
+
+      <button id="biometricLogin" class="biometric-btn">♢ &nbsp; Sign in with Biometric</button>
+      <p id="loginMessage" class="login-message"></p>
+
+      <p class="contact-admin">Don't have an account? <button type="button" id="contactAdmin" class="link-btn">Contact Administrator</button></p>
+    </div>
+
+    <div class="login-footer">
+      <b>IDSHIELD <span>AI</span></b>
+      <i></i>
+      <span>© 2026 IDShield AI. All rights reserved.</span>
+    </div>
+  </div>
+</div>
+
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="shield">◆</div><div><b>IDShield <span>AI</span></b><small>Smart Identity Verification<br>for a Safer India</small></div></div>
+  <nav>
+    <button class="nav active" data-page="dashboard">▦ <span>Dashboard</span></button>
+    <button class="nav" data-page="new">◉ <span>New Verification</span></button>
+    <button class="nav" data-page="history">◷ <span>History</span></button>
+    <button class="nav" data-page="reports">▤ <span>Reports</span></button>
+    <button class="nav" data-page="audit">☷ <span>Audit Trail</span></button>
+    <button class="nav" data-page="offline">⌁ <span>Offline Queue</span><b id="queueCount">0</b></button>
+    <button class="nav" data-page="settings">⚙ <span>Settings</span></button>
+  </nav><button id="logoutBtn" class="nav logout-nav">⇥ &nbsp; Logout</button>
+  <div class="side-bottom">
+    <div class="offline"><b>⌁ OFFLINE MODE</b><p>Local verification records are saved in your browser and can sync when online.</p><button onclick="go('offline')">View Offline Queue</button></div>
+    <div class="officer"><div>👮</div><p><b>Inspector Arjun Singh</b><small>Cyber Crime Unit<br><i>● Online</i></small></p></div>
+  </div>
+</aside>
+
+<main class="main">
+<header class="top"><div><button class="hamb">☰</button><div><h1>Welcome back, Inspector Arjun Singh 👋</h1><p>Stay safe, verify smart.</p></div></div><div class="top-right">♧ <button class="online">● Online</button> 👮⌄</div></header>
+
+<section id="dashboard" class="page active">
+  <div class="stats">
+    <div class="stat"><small>Total Verifications</small><b id="total">0</b><em>All Time</em></div>
+    <div class="stat"><small>High Risk</small><b id="high" class="red">0</b><em>Risk ≥ 61</em></div>
+    <div class="stat"><small>Medium Risk</small><b id="medium" class="orange">0</b><em>Risk 31–60</em></div>
+    <div class="stat"><small>Low Risk</small><b id="low" class="green">0</b><em>Risk 0–30</em></div>
+    <div class="stat"><small>Pending</small><b id="pending" class="blue">0</b><em>In Queue</em></div>
+  </div>
+  <div class="dash-grid">
+    <div class="card recent"><div class="title"><h2>Recent Verifications</h2><button onclick="go('history')">View All</button></div><table><thead><tr><th>ID</th><th>Name</th><th>Document</th><th>Score</th><th>Risk</th><th>Status</th><th>Time</th></tr></thead><tbody id="recentRows"></tbody></table></div>
+    <div class="card risk"><div class="title"><h2>Risk Distribution</h2></div><div id="donut" class="donut"><div><small>Total</small><b id="donutTotal">0</b></div></div><div id="legend"></div></div>
+    <div class="card active"><div class="title"><div><h2>Active Verification</h2><small id="caseId">VER-NEW</small></div><span id="activeBadge" class="badge">IN PROGRESS</span></div><div id="mini"></div></div>
+  </div>
+  <div class="card quick"><div class="title"><h2>Quick Actions</h2></div><div class="quick-grid">
+    <button onclick="newCase()">＋<span>New Verification</span></button>
+    <button onclick="chooseDocument()">☁<span>Upload Document</span></button>
+    <button onclick="openQR()">▦<span>Scan QR Code</span></button>
+    <button onclick="openFace()">♙<span>Capture Face</span></button>
+    <button onclick="go('history')">◷<span>View History</span></button>
+    <button onclick="downloadReport()">▤<span>Generate Report</span></button>
+  </div></div>
+
+  <div class="workflow">
+    <div class="wf" id="w1"><div class="num">1</div><div class="body"><div class="wf-title"><b>CONSENT INFORMATION</b><span id="s1" class="pending">Pending</span></div>
+      <div class="wf-content consent"><div class="big">▤✓</div><div><b>Inform the citizen about the verification process.</b><ul><li>Purpose of verification explained</li><li>Data used only for lawful purposes</li><li>Camera access may be required</li><li>Consent recorded securely</li></ul></div><button class="primary" id="consentBtn" onclick="confirmConsent()">I Consent, Continue</button></div>
+    </div></div>
+
+    <div class="wf locked" id="w2"><div class="num">2</div><div class="body"><div class="wf-title"><b>QR CODE VERIFICATION</b><span id="s2" class="pending">Locked</span></div>
+      <div class="wf-content"><div class="scanner">Scan QR / Barcode<div class="fakeqr">▦</div><button onclick="openQR()">Open Scanner</button></div><div id="qrInfo"><b>No QR verified.</b><p>You may bypass this step when the document has no QR/barcode.</p></div><div class="bypass"><b>No QR Code on Document?</b><p>Use this only when the selected document genuinely has no QR/barcode.</p><button onclick="bypassQR()">Bypass & Continue</button></div></div>
+    </div></div>
+
+    <div class="wf locked" id="w3"><div class="num">3</div><div class="body"><div class="wf-title"><b>FACE VERIFICATION</b><span id="s3" class="pending">Locked</span></div>
+      <div class="wf-content"><div class="photo" id="docPhoto">Document Photo</div><div class="photo" id="facePhoto">Live Capture</div><div class="match"><small>Match Score</small><b id="faceScore">—</b><div class="bar"><i id="faceBar"></i></div><p id="faceResult">Complete QR step first.</p><button onclick="openFace()">Capture & Verify</button></div></div>
+    </div></div>
+
+    <div class="wf locked" id="w4"><div class="num">4</div><div class="body"><div class="wf-title"><b>LIVENESS DETECTION</b><span id="s4" class="pending">Locked</span></div>
+      <div class="wf-content live"><div class="ring" id="liveRing">—</div><div><b id="liveText">Camera challenge</b><p id="liveDetail">Complete a short challenge after face verification.</p><button onclick="startLiveness()">Start Camera</button></div></div>
+    </div></div>
+
+    <div class="wf locked" id="w5"><div class="num">5</div><div class="body"><div class="wf-title"><b>OFFICER PHOTO VERIFICATION</b><span id="s5" class="pending">Locked</span></div>
+      <div class="wf-content"><div class="photo"><img src="assets/officer-demo.jpg" alt="Officer demo photo"></div><div class="photo" id="officerPhoto">Live Capture</div><div class="match"><small>Officer Verification</small><b id="officerScore">—</b><div class="bar"><i id="officerBar"></i></div><button onclick="openOfficer()">Capture Officer Photo</button></div></div>
+    </div></div>
+
+    <div class="wf locked" id="w6"><div class="num">6</div><div class="body"><div class="wf-title"><b>UPLOAD DOCUMENT</b><span id="s6" class="pending">Locked</span></div>
+      <div class="wf-content"><label class="drop" id="drop"><input id="docInput" type="file" accept="image/*,.pdf"><span class="cloud">☁</span><b>Upload Document</b><small>Drag & drop your document here</small><button type="button" onclick="chooseDocument()">Choose File</button><small>JPG, PNG, PDF · Max 10MB</small></label><div id="preview" class="preview">Document preview</div></div>
+    </div></div>
+
+    <div class="wf locked" id="w7"><div class="num">7</div><div class="body"><div class="wf-title"><b>INFORMATION & EXTRACTION</b><span id="s7" class="pending">Locked</span></div>
+      <div class="fields"><label>Full Name <b id="name">—</b></label><label>Father's Name <b id="father">—</b></label><label>Date of Birth <b id="dob">—</b></label><label>Gender <b id="gender">—</b></label><label>Document Number <b id="number">—</b></label><label>Document Type <b id="type">—</b></label><button onclick="editInfo()">Edit</button></div>
+    </div></div>
+
+    <div class="wf locked" id="w8"><div class="num">8</div><div class="body"><div class="wf-title"><b>AI ANALYSIS</b><span id="s8" class="pending">Locked</span></div>
+      <div class="analysis"><div class="score"><b id="score">—</b><small>RISK SCORE</small></div><div><b>Analysis Summary</b><p>✓ Document authenticity <span id="auth">Pending</span></p><p>✓ Data consistency <span id="consistency">Pending</span></p><p>✓ Security features <span id="security">Pending</span></p><p>✓ Tampering check <span id="tamper">Pending</span></p></div><div class="recommend"><b>Recommendation</b><p id="recommend">Information extracted. Review the verification checks, then run AI analysis.</p><button onclick="runAI()">Run AI Analysis</button></div></div>
+    </div></div>
+
+    <div class="wf locked" id="resultCard"><div class="num">9</div><div class="body">
+      <div class="wf-title"><b>VERIFICATION RESULT</b><span id="resultStatus" class="pending">Locked</span></div>
+      <div class="result-layout">
+        <div class="result-main">
+          <div class="result-grid">
+            <div class="result-score"><b id="resultScore">—</b><small>RISK SCORE / 100</small></div>
+            <div><h3 id="resultRisk">Awaiting analysis</h3><p id="resultRecommendation"></p></div>
+          </div>
+          <div class="checks" id="resultChecks"></div>
+        </div>
+        <div class="officer-result">
+          <div class="officer-result-head"><b>OFFICER PHOTO VERIFICATION</b><span id="officerResultStatus" class="pending">Pending</span></div>
+          <div class="officer-result-body">
+            <div class="officer-portrait"><img id="resultOfficerImage" src="assets/officer-demo.jpg" alt="Officer demo photo"></div>
+            <div class="officer-result-info">
+              <small>Officer Verified</small>
+              <b id="resultOfficerScore">—</b>
+              <div class="bar"><i id="resultOfficerBar"></i></div>
+              <p id="resultOfficerText">Complete officer verification.</p>
+              <button onclick="openOfficer()">Recapture Photo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="result-actions">
+        <button class="report-btn" onclick="downloadReport()">▤ &nbsp; GENERATE REPORT</button>
+        <button class="primary submit-btn" onclick="submitCase()">▣ &nbsp; SUBMIT CASE</button>
+      </div>
+    </div></div>
+  </div>
+  <footer>🛡️ Preliminary AI-assisted screening only. Final verification requires an authorized human officer.</footer>
+</section>
+
+<section id="new" class="page"><div class="card page-card"><h2>New Verification</h2><p>Start a new verification session.</p><button class="primary large" onclick="newCase()">Start Verification</button></div></section>
+<section id="history" class="page"><div class="card page-card"><div class="title"><h2>Verification History</h2><input id="search" placeholder="Search by name, ID or document"></div><table><thead><tr><th>ID</th><th>Name</th><th>Document</th><th>Score</th><th>Risk</th><th>Status</th><th>Time</th></tr></thead><tbody id="historyRows"></tbody></table></div></section>
+<section id="reports" class="page"><div class="card page-card"><h2>Reports</h2><p>Create and download a local investigation report for the active case.</p><button class="primary" onclick="downloadReport()">Generate Report</button></div></section>
+<section id="audit" class="page"><div class="card page-card"><h2>Audit Trail</h2><div id="auditRows"></div></div></section>
+<section id="offline" class="page"><div class="card page-card"><h2>Offline Queue</h2><p id="offlineText"></p><button class="primary" onclick="syncQueue()">Sync Queue</button></div></section>
+<section id="settings" class="page"><div class="card page-card"><h2>Settings</h2><label><input type="checkbox" checked> Require citizen consent</label><label><input type="checkbox" checked> Save local audit trail</label><p class="notice">Production government verification and biometric matching must use authorized integrations and appropriate legal controls.</p></div></section>
+</main></div>
+
+<div class="modal" id="qrModal"><div class="modalbox"><button class="close" onclick="closeModal('qrModal')">×</button><h2>Citizen QR Verification</h2><video id="qrVideo" autoplay playsinline></video><p id="qrMsg">Point the camera at a QR/barcode.</p><button class="primary full" onclick="scanQR()">Start / Scan</button><button class="full" onclick="closeModal('qrModal')">Stop Camera</button></div></div>
+<div class="modal" id="faceModal"><div class="modalbox"><button class="close" onclick="closeModal('faceModal')">×</button><h2>Face Verification</h2><video id="faceVideo" autoplay playsinline></video><p>Use the live camera after consent.</p><button class="primary full" onclick="captureFace()">Capture & Verify</button><button class="full" onclick="closeModal('faceModal')">Stop Camera</button></div></div>
+<div class="modal" id="officerModal"><div class="modalbox"><button class="close" onclick="closeModal('officerModal')">×</button><h2>Officer Photo Verification</h2><video id="officerVideo" autoplay playsinline></video><button class="primary full" onclick="captureOfficer()">Capture & Verify Officer</button><button class="full" onclick="closeModal('officerModal')">Stop Camera</button></div></div>
+<canvas id="canvas" hidden></canvas><div id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script src="script.js"></script>
+</body></html>
